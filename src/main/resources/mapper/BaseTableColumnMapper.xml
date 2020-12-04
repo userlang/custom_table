@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customtable.mapper.BaseTableColumnMapper" >
+	<resultMap id="resultMap" type="com.customtable.bo.BaseListColumn">
+		<id property="listCode" column="list_code"/>
+		<result column="column_code" property="columnCode"/>
+		<result column="column_name" property="columnName"/>
+		<result column="order1" property="order1"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+	</resultMap>
+
+	<select id="queryListColumnByListCode" resultMap="resultMap" parameterType="String">
+		select * from base_table_column where list_code=#{listCode} order by order1 asc
+	</select>
+
+	<insert id="addListColumn" parameterType="com.customtable.bo.BaseListColumn">
+		<selectKey keyProperty="order1"  resultType="java.lang.Integer" order="BEFORE"> <!-- 绑定对应属性 -->
+			SELECT IFNULL(max(order1)+1,0)  from base_list_column
+			where list_code=#{listCode}
+		</selectKey>
+
+		insert into base_table_column (list_code,column_code,column_name,order1,create_time,update_time,display)
+		values(#{listCode},#{columnCode},#{columnName},${order1},now(),now(),${display})
+
+	</insert>
+
+	<delete id="delListColumn" parameterType="com.customtable.bo.BaseListColumn">
+		delete from base_table_column where list_code=#{listCode} and column_code=#{columnCode}
+	</delete>
+	 
+
+</mapper>

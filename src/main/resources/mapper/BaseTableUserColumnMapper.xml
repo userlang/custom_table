@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customtable.mapper.BaseTableUserColumnMapper" >
+
+	<resultMap id="resultMap" type="com.customtable.bo.BaseUserListColumn">
+		<id property="listCode" column="list_code"/>
+		<result column="column_code" property="columnCode"/>
+		<result column="userId" property="userId"/>
+		<result column="userOrder" property="userOrder"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+	</resultMap>
+
+
+	<select id="queryListColumnByCondition" resultMap="resultMap" parameterType="String">
+		select * from base_table_user_column where list_code=#{listCode} and  userId=${userId}
+	</select>
+
+
+	<insert id="insertBaseUserListColumn" parameterType="com.customtable.bo.BaseUserListColumn">
+
+		<selectKey keyProperty="userOrder"  resultType="java.lang.Integer" order="BEFORE"> <!-- 绑定对应属性 -->
+			SELECT IFNULL(max(userOrder)+1,0)  from base_table_user_column
+			where list_code=#{listCode} and userId=${userId}
+		</selectKey>
+
+		insert into base_table_user_column (list_code,column_code,userId,userOrder,create_time,update_time)
+		values(#{listCode},#{columnCode},${userId},${userOrder},now(),now())
+
+	</insert>
+
+	<delete id="delUserColumn" parameterType="com.customtable.bo.BaseUserListColumn" >
+		delete from base_table_user_column
+		where
+		list_code=#{listCode}
+		and  column_code=#{columnCode}
+		and userId= ${userId}
+	</delete>
+</mapper>
