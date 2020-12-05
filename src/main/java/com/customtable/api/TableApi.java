@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@Api(tags="ListTableApi")
+@Api(tags="TableApi")
 public class TableApi {
     @Resource
     private BaseTableService baseTableService;

@@ -16,7 +16,7 @@
 
 	<insert id="addListColumn" parameterType="com.customtable.bo.BaseListColumn">
 		<selectKey keyProperty="order1"  resultType="java.lang.Integer" order="BEFORE"> <!-- 绑定对应属性 -->
-			SELECT IFNULL(max(order1)+1,0)  from base_list_column
+			SELECT IFNULL(max(order1)+1,0)  from base_table_column
 			where list_code=#{listCode}
 		</selectKey>
 
