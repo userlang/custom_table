@@ -30,8 +30,8 @@ public class TableUserColumnApi {
      * @return userColumn=用户拥有的列  allColumn=该列表全量的列
      */
     @ApiOperation("查询列表所有列,当前用户持有多少列")
-    @RequestMapping(value = "queryListColumnAndUserColumn",method = RequestMethod.POST)
-    public Map<String,Object> queryListColumnAndUserColumn(
+    @RequestMapping(value = "queryTableColumnAndUserColumn",method = RequestMethod.POST)
+    public Map<String,Object> queryTableColumnAndUserColumn(
             @ApiParam(value = "用户id",name = "userId",defaultValue = "-1") @RequestParam("userId") Integer userId,
             @ApiParam(value = "列表编码",name = "listCode") @RequestParam("listCode") String listCode){
         //查询当前用户有该列表的多少个列
@@ -49,8 +49,8 @@ public class TableUserColumnApi {
      * 用户自定义列表添加列
      */
     @ApiOperation("用户添加列表列，并且返回该列表所有列,当前用户持有多少列")
-    @RequestMapping(value = "addUserListColumn",method = RequestMethod.POST)
-    public  Map<String,Object> addUserListColumn(
+    @RequestMapping(value = "addUserTableColumn",method = RequestMethod.POST)
+    public  Map<String,Object> addUserTableColumn(
             @ApiParam(value = "用户id",name = "userId") @RequestParam("userId") Integer userId,
             @ApiParam(value = "列表编码",name = "listCode") @RequestParam("listCode") String listCode,
             @ApiParam(value = "列编码",name = "columnCode") @RequestParam("columnCode") String columnCode){
@@ -61,7 +61,7 @@ public class TableUserColumnApi {
         info.setUserId(userId);
         int ll=userListColumnService.insertBaseUserListColumn(info);
         if(ll>0){
-            return queryListColumnAndUserColumn(userId,listCode);
+            return queryTableColumnAndUserColumn(userId,listCode);
         }
         result.put("message","无法添加");
         result.put("code","-1");
@@ -75,8 +75,8 @@ public class TableUserColumnApi {
      */
 
     @ApiOperation("删除用户列表列")
-    @RequestMapping(value = "delUserColumn",method = RequestMethod.POST)
-    public  Map<String,Object> delUserColumn(
+    @RequestMapping(value = "delUserTableColumn",method = RequestMethod.POST)
+    public  Map<String,Object> delUserTableColumn(
             @ApiParam(value = "用户id",name = "userId") @RequestParam("userId") Integer userId,
             @ApiParam(value = "列表编码",name = "listCode") @RequestParam("listCode") String listCode,
             @ApiParam(value = "列编码",name = "columnCode") @RequestParam("columnCode") String columnCode

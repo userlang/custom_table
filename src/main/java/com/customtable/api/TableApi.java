@@ -23,9 +23,9 @@ public class TableApi {
     /**
      * 查询当前系统的全部的列表
      */
-    @ApiOperation("查询系统所有列表")
-    @RequestMapping(value = "queryListTableAll", method = RequestMethod.POST)
-    public Map<String,Object> queryListTableAll(){
+    @ApiOperation("查询所有列表")
+    @RequestMapping(value = "queryTableAll", method = RequestMethod.POST)
+    public Map<String,Object> queryTableAll(){
         Map<String,Object> result=new HashMap<>();
         List<BaseList> r=baseTableService.queryListNameAll();
         result.put("data",r);
@@ -36,8 +36,8 @@ public class TableApi {
      */
 
     @ApiOperation("添加列表信息")
-    @RequestMapping(value = "addListTable", method = RequestMethod.POST)
-    public Map<String,Object> addListTable(String listCode,String listName,String listDesc){
+    @RequestMapping(value = "addTable", method = RequestMethod.POST)
+    public Map<String,Object> addTable(String listCode,String listName,String listDesc){
         Map<String,Object> result=new HashMap<>();
         BaseList base=new BaseList();
         base.setListCode(listCode);
@@ -45,7 +45,7 @@ public class TableApi {
         base.setListName(listName);
         int i=baseTableService.addListTable(base);
         if(i>0){
-            return queryListTableAll();
+            return queryTableAll();
         }
         result.put("message","添加失敗");
         result.put("code","-1");

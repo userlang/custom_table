@@ -17,4 +17,5 @@ public class CustomTableApplication {
 		SpringApplication.run(CustomTableApplication.class, args);
 	}
 
+
 }
