@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link  rel="stylesheet" href="index.css">
+    <script type="text/javascript" src="jquery.1.8.0.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+        $(function (){
+
+
+            $(".TableApi").click(function(){
+
+                $.ajax({
+                    url:"http://127.0.0.1/queryTableAll",
+                    type:"post",
+                    dataType:"json",
+                    data:{},
+                    success:function(data){
+
+                        var value="";
+                        if(null!=data.data){
+                            $.each(data.data,function(index,item){
+                                value+="<tr> <td>"+item.listCode+"</td>   <td>"+item.listName+"</td> <td>"+item.listDesc+"</td> <td>操作</td> </tr>";
+                            })
+                        }else{
+                            value+=" 没有数据";
+                        }
+                        document.getElementById("TableApi").innerHTML=value;
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                        alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+                        alert(errorThrown.toString());
+
+                    }
+                })
+
+            });
+
+
+
+
+
+
+        });
+
+
+
+
+</script>
+<div>
+    <div class="left">
+        <ul class="sys">
+            <li class="TableApi">列表管理</li>
+            <li class="TableColumnApi">列表列管理</li>
+        </ul >
+        <ul class="use">
+
+        </ul>
+    </div>
+    <div class="rigth">
+            <table border="1" class="TableApi">
+                列表管理
+                <thead>
+                    <tr>
+                        <th>列表编号</th>
+                        <th>列表名称</th>
+                        <th>列表描述</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="TableApi">
+
+                </tbody>
+            </table>
+
+    </div>
+</div>
+<table>
+    <tr>
+        <td>
+
+        </td>
+    </tr>
+
+
+</table>
+
+
+
+</body>
+</html>

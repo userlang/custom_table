@@ -1,0 +1,26 @@
+.left{
+    width: 9%;
+    border: 1px salmon solid;
+    height: 1000px;
+    float: left;
+}
+.rigth{
+    width: 89%;
+    border: 1px cyan solid;
+    height: 1000px;
+    float: left;
+}
+ul{
+    padding: 10px;
+
+}
+li{
+    list-style: none;
+    margin-top: 5px;
+    color: darkcyan;
+    padding: 0px;
+    cursor: pointer;
+}
+.sys{
+    border-bottom: 1px slategray solid ;
+}
