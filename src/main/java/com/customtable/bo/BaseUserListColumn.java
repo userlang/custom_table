@@ -5,11 +5,19 @@ public class BaseUserListColumn {
 
     private String  listCode;
     private String  columnCode;
+    private String  columnName;
     private Integer userId;
     private Integer userOrder;
     private String  createTime;
     private String  updateTime;
 
+    public String getColumnName() {
+        return columnName;
+    }
+
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
 
     public String getListCode() {
         return listCode;

@@ -82,12 +82,14 @@ public class TableColumnApi {
         Map<String,Object> result=new HashMap<>();
 
         List<BaseListColumn> list =userListColumnService.queryListColumn(listCode);
+
         if(null!=list&&list.size()>0){
             result.put("message","查询成功");
             result.put("code","0");
             result.put("data",list);
             return result;
         }
+        result.put("data",null);
         result.put("message","查询失败");
         result.put("code","-1");
         return result;

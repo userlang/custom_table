@@ -8,10 +8,17 @@
 		<result column="order1" property="order1"/>
 		<result column="create_time" property="createTime"/>
 		<result column="update_time" property="updateTime"/>
+		<result column="display" property="display"/>
 	</resultMap>
 
 	<select id="queryListColumnByListCode" resultMap="resultMap" parameterType="String">
-		select * from base_table_column where list_code=#{listCode} order by order1 asc
+			<if test="listCode!=null and listCode!=''">
+				select * from base_table_column where list_code=#{listCode} order by order1 asc
+			</if>
+
+			<if test="listCode==null or listCode==''">
+					select * from base_table_column
+			</if>
 	</select>
 
 	<insert id="addListColumn" parameterType="com.customtable.bo.BaseListColumn">

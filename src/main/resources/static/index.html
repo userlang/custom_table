@@ -11,8 +11,11 @@
 <script type="text/javascript">
         $(function (){
 
-
             $(".TableApi").click(function(){
+                /*  列表 查询*/
+                $(".rigth table").css("display","none");
+
+                $(".TableApiTable").css("display","block");
 
                 $.ajax({
                     url:"http://127.0.0.1/queryTableAll",
@@ -42,8 +45,99 @@
 
             });
 
+            $(".TableColumnApi").click(function(){
+                /*  列表列 查询*/
+                   var listCode=$("input[name=listCode]").val();
+                    $(".rigth table").css("display","none");
+                    $(".TableColumnApiTable").css("display","block");
+                $.ajax({
+                    url:"http://127.0.0.1/queryTableColumn",
+                    type:"post",
+                    dataType:"json",
+                    data:{"listCode":listCode},
+                    success:function(data){
+
+                        var value="";
+                        if(null!=data){
+                            $.each(data.data,function(index,item){
+                                value+="<tr> <td>"+item.listCode+"</td>   <td>"+item.columnCode+"</td> <td>"+item.columnName    +"</td> <td>"+item.display+"</td>     <td>操作</td> </tr>";
+                            })
+                        }else{
+                            value+=" 没有数据";
+                        }
+                        document.getElementById("TableColumnApi").innerHTML=value;
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                        alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+                        alert(errorThrown.toString());
+
+                    }
+                })
+
+            });
+            //查询列表信息
+            $.ajax({
+                url:"http://127.0.0.1/queryTableAll",
+                type:"post",
+                dataType:"json",
+                data:{},
+                success:function(data){
+
+                    var value="";
+                    if(null!=data){
+                        $.each(data.data,function(index,item){
+                            value+="<li class='"+item.listCode+"'>"+item.listName+"</li>";
+                        })
+                    }else{
+                        value+=" 没有数据";
+                    }
+                    document.getElementById("use").innerHTML=value;
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                    alert(errorThrown.toString());
+
+                }
+            })
+        $("#use").on('click','li',function(){
+            $(".TableUserColumnApiTable").css("display","block");
+            //获取当前列表编号
+               var list_code= $(this).attr("class");
+                //获取用户id
+               var userid= $("input[name=userid]").val();
+            $.ajax({
+                url:"http://127.0.0.1/queryTableColumnAndUserColumn",
+                type:"post",
+                dataType:"json",
+                data:{"userId":userid,
+                    "listCode":list_code
+                },
+                success:function(data){
+                    var value="";
+                    if(null!=data&&null!=data.userColumn){
+                        $.each(data.userColumn,function(index,item){
+                            value+="<th class='"+item.columnCode+"'>"+item.columnName+"</th>";
+                        })
+                    }else{
+                        value+=" 没有数据";
+                    }
+                    document.getElementById("settings").innerHTML=value;
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                    alert(errorThrown.toString());
+
+                }
+            })
 
 
+        });
 
 
 
@@ -59,14 +153,17 @@
             <li class="TableApi">列表管理</li>
             <li class="TableColumnApi">列表列管理</li>
         </ul >
-        <ul class="use">
+        <ul class="use" id="use">
 
         </ul>
     </div>
     <div class="rigth">
-            <table border="1" class="TableApi">
-                列表管理
+            <table border="1" class="TableApiTable">
+
                 <thead>
+                <tr>
+                    <th colspan="4">列表管理</th>
+                </tr>
                     <tr>
                         <th>列表编号</th>
                         <th>列表名称</th>
@@ -78,6 +175,49 @@
 
                 </tbody>
             </table>
+
+        <table border="1" class="TableColumnApiTable">
+
+            <thead>
+            <tr>
+                <th colspan="4">列表列管理</th>
+                <th><input value="" name="listCode" ></th>
+            </tr>
+
+            <tr>
+                <th>列表编号</th>
+                <th>列编号</th>
+                <th>列名称</th>
+                <th>是否显示</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="TableColumnApi">
+
+            </tbody>
+        </table>
+
+
+
+
+        <!--                                      自定义列表 -->
+
+        <table border="1" class="TableUserColumnApiTable">
+
+            <thead>
+            <tr>
+                <th >自定义列表管理</th>
+                <th><input value="" name="userid" ></th>
+            </tr>
+
+            <tr id="settings">
+
+            </tr>
+            </thead>
+            <tbody id="TableUserColumnApiTable">
+
+            </tbody>
+        </table>
 
     </div>
 </div>

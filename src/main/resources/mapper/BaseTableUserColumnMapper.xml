@@ -5,6 +5,7 @@
 	<resultMap id="resultMap" type="com.customtable.bo.BaseUserListColumn">
 		<id property="listCode" column="list_code"/>
 		<result column="column_code" property="columnCode"/>
+		<result column="column_name" property="columnName"/>
 		<result column="userId" property="userId"/>
 		<result column="userOrder" property="userOrder"/>
 		<result column="create_time" property="createTime"/>
@@ -13,7 +14,8 @@
 
 
 	<select id="queryListColumnByCondition" resultMap="resultMap" parameterType="String">
-		select * from base_table_user_column where list_code=#{listCode} and  userId=${userId}
+		select * from base_table_user_column as btuc inner join base_table_column as btc on   btc.column_code=btuc.column_code
+		where btuc.list_code=#{listCode} and  userId=${userId}
 	</select>
 
 
