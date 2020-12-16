@@ -49,8 +49,8 @@ public class TableUserColumnApi {
      * 用户自定义列表添加列
      */
     @ApiOperation("用户添加列表列，并且返回该列表所有列,当前用户持有多少列")
-    @RequestMapping(value = "addUserTableColumn",method = RequestMethod.POST)
-    public  Map<String,Object> addUserTableColumn(
+    @RequestMapping(value = "addOrDelUserTableColumn",method = RequestMethod.POST)
+    public  Map<String,Object> addOrDelUserTableColumn(
             @ApiParam(value = "用户id",name = "userId") @RequestParam("userId") Integer userId,
             @ApiParam(value = "列表编码",name = "listCode") @RequestParam("listCode") String listCode,
             @ApiParam(value = "列编码",name = "columnCode") @RequestParam("columnCode") String columnCode){
