@@ -13,4 +13,8 @@ public interface BaseTableColumnMapper {
     int addListColumn(BaseListColumn info);
     //删除列
     int delListColumn(BaseListColumn info);
+
+    int modifyTableColumnDisplay(String listCode, String columnCode, int i);
+
+
 }

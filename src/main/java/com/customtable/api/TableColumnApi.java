@@ -1,6 +1,7 @@
 package com.customtable.api;
 
 import com.customtable.bo.BaseListColumn;
+import com.customtable.service.BaseTableColumnService;
 import com.customtable.service.BaseTableUserColumnService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +23,8 @@ public class TableColumnApi {
     @Resource
     private BaseTableUserColumnService userListColumnService;
 
+    @Resource
+    private BaseTableColumnService baseTableColumnService;
     /**
      * 列表添加列
      */
@@ -91,6 +94,54 @@ public class TableColumnApi {
         }
         result.put("data",null);
         result.put("message","查询失败");
+        result.put("code","-1");
+        return result;
+    }
+
+    @ApiOperation("开启列表列")
+    @RequestMapping(value = "openTableColumn",method = RequestMethod.POST)
+    public  Map<String,Object> openTableColumn(
+            @ApiParam(value = "列表编码",name = "listCode") @RequestParam("listCode") String listCode,
+            @ApiParam(value = "列编码",name = "columnCode") @RequestParam("columnCode") String columnCode
+    ){
+
+        Map<String,Object> result=new HashMap<>();
+
+        int i=baseTableColumnService.openTableColumn(listCode,columnCode,0);
+
+        if(i>0){
+            List<BaseListColumn> list= userListColumnService.queryListColumn(listCode);
+            result.put("message","开启列表列成功");
+            result.put("code","0");
+            result.put("data",list);
+            return result;
+        }
+        result.put("data",null);
+        result.put("message","开启列表列失败");
+        result.put("code","-1");
+        return result;
+    }
+
+    @ApiOperation("禁用列表列")
+    @RequestMapping(value = "closeTableColumn",method = RequestMethod.POST)
+    public  Map<String,Object> closeTableColumn(
+            @ApiParam(value = "列表编码",name = "listCode") @RequestParam("listCode") String listCode,
+            @ApiParam(value = "列编码",name = "columnCode") @RequestParam("columnCode") String columnCode
+    ){
+
+        Map<String,Object> result=new HashMap<>();
+
+        int i=baseTableColumnService.closeTableColumn(listCode,columnCode,1);
+
+        if(i>0){
+            List<BaseListColumn> list= userListColumnService.queryListColumn(listCode);
+            result.put("message","禁用列表列成功");
+            result.put("code","0");
+            result.put("data",list);
+            return result;
+        }
+        result.put("data",null);
+        result.put("message","禁用列表列失败");
         result.put("code","-1");
         return result;
     }

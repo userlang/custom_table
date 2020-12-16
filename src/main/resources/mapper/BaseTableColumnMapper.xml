@@ -37,4 +37,8 @@
 	</delete>
 	 
 
+	<update id="modifyTableColumnDisplay">
+		update base_table_column set display=${i} where  list_code=#{listCode} and column_code=#{columnCode}
+	</update>
+
 </mapper>

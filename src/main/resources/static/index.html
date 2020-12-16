@@ -22,9 +22,9 @@
                                         $.each(data.data,function(index,item){
                                             value+="<tr> <td>"+item.listCode+"</td>   <td>"+item.listName+"</td> <td>"+item.listDesc+"</td> <td>"+(!item.state)+"</td> <td> ";
                                             if((!item.state)){
-                                            value+=" <button  onclick=closeListCode('"+item.listCode+"') >禁用</button>  </td> </tr>";
+                                            value+=" <button  style='color:red' onclick=closeListCode('"+item.listCode+"') >禁用</button>  </td> </tr>";
                                             }else{
-                                            value+=" <button  onclick=openListCode('"+item.listCode+"') >启用</button> </td> </tr>";
+                                            value+=" <button  style='color:green' onclick=openListCode('"+item.listCode+"') >启用</button> </td> </tr>";
                                             }
 
 
@@ -56,34 +56,11 @@
 
             $(".TableColumnApi").click(function(){
                 /*  列表列 查询*/
-                   var listCode=$("input[name=listCode]").val();
+
                     $(".rigth table").css("display","none");
                     $(".TableColumnApiTable").css("display","block");
-                $.ajax({
-                    url:"http://127.0.0.1/queryTableColumn",
-                    type:"post",
-                    dataType:"json",
-                    data:{"listCode":listCode},
-                    success:function(data){
 
-                        var value="";
-                        if(null!=data){
-                            $.each(data.data,function(index,item){
-                                value+="<tr> <td>"+item.listCode+"</td>   <td>"+item.columnCode+"</td> <td>"+item.columnName    +"</td> <td>"+item.display+"</td>     <td>操作</td> </tr>";
-                            })
-                        }else{
-                            value+=" 没有数据";
-                        }
-                        document.getElementById("TableColumnApi").innerHTML=value;
-                    },
-                    error:function(XMLHttpRequest, textStatus, errorThrown){
-                        alert(XMLHttpRequest.status);
-                        alert(XMLHttpRequest.readyState);
-                        alert(textStatus);
-                        alert(errorThrown.toString());
-
-                    }
-                })
+                  TableColumnApiList();
 
             });
             //查询列表信息
@@ -118,6 +95,10 @@
                var list_code= $(this).attr("class");
                 //获取用户id
                var userid= $("input[name=userid]").val();
+               if(null==userid||userid==''||undifend==userid){
+                    alert('请输入用户id');
+                    return;
+               }
             $.ajax({
                 url:"http://127.0.0.1/queryTableColumnAndUserColumn",
                 type:"post",
@@ -201,6 +182,83 @@ function openListCode(i){
 
 }
 
+function TableColumnApiList(){
+            var listCode=$("input[name=listCode]").val();
+            $.ajax({
+                    url:"http://127.0.0.1/queryTableColumn",
+                    type:"post",
+                    dataType:"json",
+                    data:{"listCode":listCode},
+                    success:function(data){
+
+                        var value="";
+                        if(null!=data){
+                            $.each(data.data,function(index,item){
+                                value+="<tr> <td>"+item.listCode+"</td>   <td>"+item.columnCode+"</td> <td>"+item.columnName    +"</td> <td>"+(!item.display)+"</td>     <td>";
+                                 if((!item.display)){
+                                            value+=" <button style='color:red' onclick=closeTableColumn('"+item.listCode+"','"+item.columnCode+"') >禁用</button>  </td> </tr>";
+                                            }else{
+                                            value+=" <button style='color:green' onclick=openTableColumn('"+item.listCode+"','"+item.columnCode+"') >启用</button> </td> </tr>";
+                                            }
+
+
+                            })
+                        }else{
+                            value+=" 没有数据";
+                        }
+                        document.getElementById("TableColumnApi").innerHTML=value;
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                        alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+                        alert(errorThrown.toString());
+
+                    }
+                })
+}
+function openTableColumn(i,j){
+
+  $.ajax({
+                    url:"http://127.0.0.1/openTableColumn",
+                    type:"post",
+                    dataType:"json",
+                    data:{"listCode":i,
+                    "columnCode":j},
+                    success:function(data){
+                       TableColumnApiList();
+
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                        alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+                        alert(errorThrown.toString());
+
+                    }
+                })
+}
+function closeTableColumn(i,j){
+
+  $.ajax({
+                    url:"http://127.0.0.1/closeTableColumn",
+                    type:"post",
+                    dataType:"json",
+                    data:{"listCode":i,
+                    "columnCode":j},
+                    success:function(data){
+                   TableColumnApiList();
+
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                        alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+                        alert(errorThrown.toString());
+
+                    }
+                })
+}
 
 </script>
 <div>
@@ -247,7 +305,7 @@ function openListCode(i){
                 <th>列编号</th>
                 <th>列名称</th>
                 <th>是否显示</th>
-                <th>操作</th>
+                <th>添加</th>
             </tr>
             </thead>
             <tbody id="TableColumnApi">
