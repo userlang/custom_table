@@ -38,4 +38,10 @@
 		and  column_code=#{columnCode}
 		and userId= ${userId}
 	</delete>
+
+	<select id="queryUserTableColumn" resultType="Integer" parameterType="String">
+
+		select count(1) from base_table_user_column  	where list_code=#{listCode} and userId=${userId} and column_code=  #{columnCode}
+
+	</select>
 </mapper>

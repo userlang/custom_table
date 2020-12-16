@@ -26,4 +26,5 @@ public interface BaseTableUserColumnService {
     int delListColumn(BaseListColumn info);
 
 
+    Integer queryUserTableColumn(Integer userId, String listCode, String columnCode);
 }

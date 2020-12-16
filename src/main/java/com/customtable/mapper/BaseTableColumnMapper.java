@@ -17,4 +17,5 @@ public interface BaseTableColumnMapper {
     int modifyTableColumnDisplay(String listCode, String columnCode, int i);
 
 
+    Integer queryUserTableColumn(Integer userId, String listCode, String columnCode);
 }

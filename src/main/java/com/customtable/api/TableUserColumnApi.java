@@ -59,11 +59,19 @@ public class TableUserColumnApi {
         info.setColumnCode(columnCode);
         info.setListCode(listCode);
         info.setUserId(userId);
-        int ll=userListColumnService.insertBaseUserListColumn(info);
-        if(ll>0){
-            return queryTableColumnAndUserColumn(userId,listCode);
+
+        Integer count=  userListColumnService.queryUserTableColumn(userId,listCode,columnCode);
+        if(count>0){
+            //删除
+            return  delUserTableColumn(userId,listCode,columnCode);
+        }else{
+            int ll=userListColumnService.insertBaseUserListColumn(info);
+            if(ll>0){
+                return queryTableColumnAndUserColumn(userId,listCode);
+            }
         }
-        result.put("message","无法添加");
+
+        result.put("message","操作失败");
         result.put("code","-1");
         return result;
     }

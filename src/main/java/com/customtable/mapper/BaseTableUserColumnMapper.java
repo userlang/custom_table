@@ -12,4 +12,6 @@ public interface BaseTableUserColumnMapper {
     int insertBaseUserListColumn(BaseUserListColumn info);
 
     int delUserColumn(BaseUserListColumn info);
+
+    Integer queryUserTableColumn(String listCode, Integer userId, String columnCode);
 }

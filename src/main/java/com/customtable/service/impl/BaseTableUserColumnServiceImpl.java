@@ -52,4 +52,11 @@ public class BaseTableUserColumnServiceImpl implements BaseTableUserColumnServic
     public int delListColumn(BaseListColumn info) {
         return baseListColumnMapper.delListColumn(info);
     }
+
+    @Override
+    public Integer queryUserTableColumn(Integer userId, String listCode, String columnCode) {
+        return baseUserListColumnMapper.queryUserTableColumn(listCode,userId,columnCode);
+    }
+
+
 }
