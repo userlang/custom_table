@@ -91,8 +91,24 @@
             })
         $("#use").on('click','li',function(){
             $(".TableUserColumnApiTable").css("display","block");
-            //获取当前列表编号
-               var list_code= $(this).attr("class");
+        var list_code= $(this).attr("class");
+                queryTableColumnAndUserColumn(list_code);
+
+
+        });
+
+        $(".addTable").click(function(){
+                alert('功能省略');
+        });
+
+
+
+
+        });
+
+function queryTableColumnAndUserColumn(list_code){
+ //获取当前列表编号
+
                 //获取用户id
                var userid= $("input[name=userid]").val();
                if(null==userid||userid==''||'undifend'==userid){
@@ -121,7 +137,7 @@
                      var value2="";
                     if(null!=data&&null!=data.allColumn){
                         $.each(data.allColumn,function(index,item){
-                            value2+="<th class='"+item.columnCode+"'>"+item.columnName+"</th>";
+                            value2+="<th class='"+item.columnCode+"'> <button onclick=addUserTableColumn('"+item.columnCode+"','"+item.listCode+"')   >"+item.columnName+"</button> </th>";
                         })
                     }else{
                         value2+=" 没有数据";
@@ -137,19 +153,41 @@
 
                 }
             })
-
-
-        });
-
-        $(".addTable").click(function(){
-                alert('功能省略');
-        });
+}
+function addUserTableColumn(columnCode,listCode){
 
 
 
+          var userid= $("input[name=userid]").val();
+               if(null==userid||userid==''||'undifend'==userid){
+                    alert('请输入用户id');
+                    return;
+               }
+              $.ajax({
+                url:"http://127.0.0.1/addUserTableColumn",
+                type:"post",
+                dataType:"json",
+                data:{"userId":userid,
+                    "listCode":listCode,
+                    "columnCode":columnCode
+                },
+                success:function(data){
 
-        });
+                queryTableColumnAndUserColumn(listCode);
 
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                    alert(errorThrown.toString());
+
+                }
+            })
+
+
+
+}
 function closeListCode(i){
 
 
