@@ -28,7 +28,7 @@
 		</selectKey>
 
 		insert into base_table_column (list_code,column_code,column_name,order1,create_time,update_time,display)
-		values(#{listCode},#{columnCode},#{columnName},${order1},now(),now(),${display})
+		values(#{listCode},#{columnCode},#{columnName},${order1},now(),now(),0)
 
 	</insert>
 

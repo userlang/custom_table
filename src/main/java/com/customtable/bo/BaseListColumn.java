@@ -9,13 +9,13 @@ public class BaseListColumn {
     private int order1;
     private String createTime;
     private String updateTime;
-    private int display;//是否显示 0 显示 1不显示
+    private boolean display;//是否显示 0 显示 1不显示
 
-    public int getDisplay() {
+    public boolean getDisplay() {
         return display;
     }
 
-    public void setDisplay(int display) {
+    public void setDisplay(boolean display) {
         this.display = display;
     }
 

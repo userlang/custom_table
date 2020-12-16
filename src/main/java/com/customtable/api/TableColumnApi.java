@@ -37,7 +37,7 @@ public class TableColumnApi {
         info.setListCode(listCode);
         info.setColumnCode(columnCode);
         info.setColumnName(columnName);
-        info.setDisplay(Integer.parseInt(display));
+       // info.setDisplay(Integer.parseInt(display));
         int i =userListColumnService.addListColumn(info);
         if(i>0){
             result.put("message","添加成功");

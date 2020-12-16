@@ -22,9 +22,9 @@
                                         $.each(data.data,function(index,item){
                                             value+="<tr> <td>"+item.listCode+"</td>   <td>"+item.listName+"</td> <td>"+item.listDesc+"</td> <td>"+(!item.state)+"</td> <td> ";
                                             if((!item.state)){
-                                            value+=" <button  onclick='closeListCode("+item.listCode+")' >禁用</button>  </td> </tr>";
+                                            value+=" <button  onclick=closeListCode('"+item.listCode+"') >禁用</button>  </td> </tr>";
                                             }else{
-                                            value+=" <button  onclick='openListCode("+item.listCode+")' >启用</button> </td> </tr>";
+                                            value+=" <button  onclick=openListCode('"+item.listCode+"') >启用</button> </td> </tr>";
                                             }
 
 
@@ -148,6 +148,11 @@
 
         });
 
+        $(".addTable").click(function(){
+                alert('功能省略');
+        });
+
+
 
 
         });
@@ -221,7 +226,7 @@ function openListCode(i){
                         <th>列表名称</th>
                         <th>列表描述</th>
                         <th>列表状态</th>
-                        <th>添加</th>
+                        <th><button class="addTable">添加</button></th>
                     </tr>
                 </thead>
                 <tbody id="TableApi">
