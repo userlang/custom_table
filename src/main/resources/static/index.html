@@ -9,6 +9,40 @@
 <body>
 
 <script type="text/javascript">
+        function TableApiList(){
+             $.ajax({
+                                url:"http://127.0.0.1/queryTableAll",
+                                type:"post",
+                                dataType:"json",
+                                data:{},
+                                success:function(data){
+
+                                    var value="";
+                                    if(null!=data.data){
+                                        $.each(data.data,function(index,item){
+                                            value+="<tr> <td>"+item.listCode+"</td>   <td>"+item.listName+"</td> <td>"+item.listDesc+"</td> <td>"+(!item.state)+"</td> <td> ";
+                                            if((!item.state)){
+                                            value+=" <button  onclick='closeListCode("+item.listCode+")' >禁用</button>  </td> </tr>";
+                                            }else{
+                                            value+=" <button  onclick='openListCode("+item.listCode+")' >启用</button> </td> </tr>";
+                                            }
+
+
+                                        })
+                                    }else{
+                                        value+=" 没有数据";
+                                    }
+                                    document.getElementById("TableApi").innerHTML=value;
+                                },
+                                error:function(XMLHttpRequest, textStatus, errorThrown){
+                                    alert(XMLHttpRequest.status);
+                                    alert(XMLHttpRequest.readyState);
+                                    alert(textStatus);
+                                    alert(errorThrown.toString());
+
+                                }
+                            })
+        }
         $(function (){
 
             $(".TableApi").click(function(){
@@ -16,32 +50,7 @@
                 $(".rigth table").css("display","none");
 
                 $(".TableApiTable").css("display","block");
-
-                $.ajax({
-                    url:"http://127.0.0.1/queryTableAll",
-                    type:"post",
-                    dataType:"json",
-                    data:{},
-                    success:function(data){
-
-                        var value="";
-                        if(null!=data.data){
-                            $.each(data.data,function(index,item){
-                                value+="<tr> <td>"+item.listCode+"</td>   <td>"+item.listName+"</td> <td>"+item.listDesc+"</td> <td>操作</td> </tr>";
-                            })
-                        }else{
-                            value+=" 没有数据";
-                        }
-                        document.getElementById("TableApi").innerHTML=value;
-                    },
-                    error:function(XMLHttpRequest, textStatus, errorThrown){
-                        alert(XMLHttpRequest.status);
-                        alert(XMLHttpRequest.readyState);
-                        alert(textStatus);
-                        alert(errorThrown.toString());
-
-                    }
-                })
+                    TableApiList();
 
             });
 
@@ -143,11 +152,54 @@
 
         });
 
+function closeListCode(i){
 
+
+
+    $.ajax({
+                    url:"http://127.0.0.1/closeListCode",
+                    type:"post",
+                    dataType:"json",
+                    data:{"listCode":i},
+                    success:function(data){
+                TableApiList();
+
+
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                        alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+                        alert(errorThrown.toString());
+
+                    }
+                })
+}
+function openListCode(i){
+    $.ajax({
+                    url:"http://127.0.0.1/openListCode",
+                    type:"post",
+                    dataType:"json",
+                    data:{"listCode":i},
+                    success:function(data){
+                    TableApiList();
+
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                        alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+                        alert(errorThrown.toString());
+
+                    }
+                })
+
+}
 
 
 </script>
 <div>
+
     <div class="left">
         <ul class="sys">
             <li class="TableApi">列表管理</li>
@@ -162,13 +214,14 @@
 
                 <thead>
                 <tr>
-                    <th colspan="4">列表管理</th>
+                    <th colspan="5">列表管理</th>
                 </tr>
                     <tr>
                         <th>列表编号</th>
                         <th>列表名称</th>
                         <th>列表描述</th>
-                        <th>操作</th>
+                        <th>列表状态</th>
+                        <th>添加</th>
                     </tr>
                 </thead>
                 <tbody id="TableApi">
@@ -181,7 +234,7 @@
             <thead>
             <tr>
                 <th colspan="4">列表列管理</th>
-                <th><input value="" name="listCode" ></th>
+                <th><input value="" placeholder="请输入列表编号" name="listCode" ></th>
             </tr>
 
             <tr>
@@ -207,7 +260,7 @@
             <thead>
             <tr>
                 <th >自定义列表管理</th>
-                <th><input value="" name="userid" ></th>
+                <th><input value="" placeholder="请输入用户id" name="userid" ></th>
             </tr>
 
             <tr id="settings">

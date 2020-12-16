@@ -52,4 +52,35 @@ public class TableApi {
         return result;
 
     }
+
+    /**
+     * 添加系统列表
+     */
+
+    @ApiOperation("禁用列表")
+    @RequestMapping(value = "closeListCode", method = RequestMethod.POST)
+    public Map<String,Object> closeListCode(String listCode){
+        Map<String,Object> result=new HashMap<>();
+        int i=baseTableService.modifyTableState(listCode,1);
+        if(i>0){
+            return queryTableAll();
+        }
+        result.put("message","禁用");
+        result.put("code","-1");
+        return result;
+
+    }
+    @ApiOperation("启用列表")
+    @RequestMapping(value = "openListCode", method = RequestMethod.POST)
+    public Map<String,Object> openListCode(String listCode){
+        Map<String,Object> result=new HashMap<>();
+        int i=baseTableService.modifyTableState(listCode,0);
+        if(i>0){
+            return queryTableAll();
+        }
+        result.put("message","启动失敗");
+        result.put("code","-1");
+        return result;
+
+    }
 }

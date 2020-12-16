@@ -23,4 +23,9 @@ public class BaseTableServiceImpl implements BaseTableService {
     public List<BaseList> queryListNameAll() {
         return baseTableMapper.queryList();
     }
+
+    @Override
+    public int modifyTableState(String listCode,int i) {
+        return baseTableMapper.modifyTableState(listCode,i);
+    }
 }

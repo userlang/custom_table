@@ -15,8 +15,11 @@
 	</select>
 	
 	<insert id="addListTable" parameterType="com.customtable.bo.BaseList">
-		insert into base_table (list_code,list_name,list_desc)
-		values(#{listCode},#{listName},#{listDesc})
+		insert into base_table (list_code,list_name,list_desc,`state`)
+		values(#{listCode},#{listName},#{listDesc},0)
 	</insert>
+	<update id="modifyTableState">
+		update base_table set `state`=${i} where list_code=#{listCode}
+	</update>
 
 </mapper>
