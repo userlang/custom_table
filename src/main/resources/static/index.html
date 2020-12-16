@@ -91,6 +91,8 @@
             })
         $("#use").on('click','li',function(){
             $(".TableUserColumnApiTable").css("display","block");
+
+            $(".TableAllColumnApiTable").css("display","block");
         var list_code= $(this).attr("class");
                 queryTableColumnAndUserColumn(list_code);
 
