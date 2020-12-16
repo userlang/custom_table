@@ -14,8 +14,10 @@
 
 
 	<select id="queryListColumnByCondition" resultMap="resultMap" parameterType="String">
+
+
 		select * from base_table_user_column as btuc inner join base_table_column as btc on   btc.column_code=btuc.column_code
-		where btuc.list_code=#{listCode} and  userId=${userId}
+		where btuc.list_code=#{listCode} and  userId=${userId} order by userOrder asc
 	</select>
 
 
