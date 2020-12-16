@@ -116,6 +116,18 @@
                         value+=" 没有数据";
                     }
                     document.getElementById("settings").innerHTML=value;
+
+
+                     var value2="";
+                    if(null!=data&&null!=data.allColumn){
+                        $.each(data.allColumn,function(index,item){
+                            value2+="<th class='"+item.columnCode+"'>"+item.columnName+"</th>";
+                        })
+                    }else{
+                        value2+=" 没有数据";
+                    }
+                    document.getElementById("settings2").innerHTML=value2;
+
                 },
                 error:function(XMLHttpRequest, textStatus, errorThrown){
                     alert(XMLHttpRequest.status);
@@ -322,7 +334,7 @@ function closeTableColumn(i,j){
 
             <thead>
             <tr>
-                <th >自定义列表管理</th>
+                <th >当前拥有列表列</th>
                 <th><input value="" placeholder="请输入用户id" name="userid" ></th>
             </tr>
 
@@ -334,7 +346,18 @@ function closeTableColumn(i,j){
 
             </tbody>
         </table>
+        <table border="1" class="TableAllColumnApiTable">
 
+            <thead>
+            <tr>
+                <th >当前所有列表列</th>
+            </tr>
+            <tr id="settings2">
+
+            </tr>
+            </thead>
+
+        </table>
     </div>
 </div>
 <table>
